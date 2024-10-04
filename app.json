@@ -17,14 +17,10 @@
       "buildNumber": "1.0.0",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app needs access to location to show your position on the map.",
-<<<<<<< HEAD
         "UIBackgroundModes": [
           "location",
           "fetch"
         ]
-=======
-        "UIBackgroundModes": ["location","fetch"]
->>>>>>> 7d873ca7de7d5f369e4ca4f3651d4b6e92b1b970
       },
       "config": {
         "usesNonExemptEncryption": false

@@ -21,8 +21,4 @@ workflows:
         script: |
           npx eas-cli build --platform ios --non-interactive
     artifacts:
-<<<<<<< HEAD
       - build/*
-=======
-      - build/*
->>>>>>> 7d873ca7de7d5f369e4ca4f3651d4b6e92b1b970

@@ -1,15 +1,24 @@
 workflows:
-  ios-workflow:
-    name: iOS Workflow
+  expo-ios:
+    name: Expo iOS Workflow
     max_build_duration: 60
     environment:
-      node: latest
+      node: 18.15.0  # Especificamos una versión de Node.js compatible
+      xcode: latest
     scripts:
       - name: Install dependencies
-        script: npm install
+        script: |
+          npm install
       - name: Install Expo CLI
-        script: npm install -g expo-cli
+        script: |
+          npm install -g expo-cli@latest
+          npm install -g eas-cli@latest
+      - name: Check Expo environment
+        script: |
+          npx expo-doctor
+          npx expo-env-info
       - name: Build iOS
-        script: expo build:ios
+        script: |
+          npx eas-cli build --platform ios --non-interactive
     artifacts:
-      - build/*.ipa
+      - build/*

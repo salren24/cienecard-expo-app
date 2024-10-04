@@ -13,8 +13,17 @@
     },
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.municieneguilla.cienecard",
+      "buildNumber": "1.0.0",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app needs access to location to show your position on the map."
+        "NSLocationWhenInUseUsageDescription": "This app needs access to location to show your position on the map.",
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
@@ -35,6 +44,7 @@
       "eas": {
         "projectId": "2662db71-3bf6-41a9-9473-d2997b5ecbc0"
       }
-    }
+    },
+    "owner": "jdsalinas"
   }
 }

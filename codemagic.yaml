@@ -1,24 +1,23 @@
 workflows:
-  expo-ios:
-    name: Expo iOS Workflow
+  expo-ios-simulator:
+    name: Expo iOS Simulator Build
     max_build_duration: 60
     environment:
-      node: 18.15.0  # Especificamos una versión de Node.js compatible
+      node: 18.15.0
       xcode: latest
     scripts:
       - name: Install dependencies
         script: |
           npm install
-      - name: Install Expo CLI
+      - name: Install Expo CLI and EAS CLI
         script: |
-          npm install -g expo-cli@latest
-          npm install -g eas-cli@latest
+          npm install -g expo-cli@latest eas-cli@latest
       - name: Check Expo environment
         script: |
           npx expo-doctor
           npx expo-env-info
-      - name: Build iOS
+      - name: Build iOS for Simulator
         script: |
-          npx eas-cli build --platform ios --non-interactive
+          npx eas-cli build --platform ios --profile preview --non-interactive
     artifacts:
-      - build/*
+      - build/*.tar.gz

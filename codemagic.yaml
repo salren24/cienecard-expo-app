@@ -5,6 +5,8 @@ workflows:
     environment:
       node: 18.15.0
       xcode: latest
+      vars:
+        EXPO_TOKEN: $EXPO_TOKEN
     scripts:
       - name: Install dependencies
         script: |

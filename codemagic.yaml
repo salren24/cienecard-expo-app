@@ -20,6 +20,6 @@ workflows:
           npx expo-env-info
       - name: Build iOS for Simulator
         script: |
-          npx eas-cli build --platform ios --profile preview --non-interactive
+          npx eas-cli build --platform ios --profile preview --non-interactive --local
     artifacts:
       - build/*.tar.gz

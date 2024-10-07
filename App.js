@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from "expo-status-bar";
-import { Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import HomeScreen from "./screens/HomeScreen"
+import LoginScreen from "./screens/LoginScreen";
+import HomeScreen from "./screens/HomeScreen";
 import Comerciales from "./screens/Comerciales";
 import Municipales from "./screens/Municipales";
 import Ubicaciones from './screens/Ubicaciones';
@@ -16,7 +17,17 @@ import ItemScreen from "./screens/ItemScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
+    // Verificar si el usuario está autenticado
+    const checkLoginStatus = async () => {
+      const userToken = await AsyncStorage.getItem('userToken');
+      setIsLoggedIn(!!userToken);
+    };
+
+    checkLoginStatus();
+
     // Activar keepAwake
     async function activateKeepAwake() {
       await activateKeepAwakeAsync();
@@ -42,11 +53,21 @@ export default function App() {
       <NavigationContainer>
         <StatusBar style="light" />
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Comerciales" component={Comerciales} />
-          <Stack.Screen name="Municipales" component={Municipales} />
-          <Stack.Screen name="Ubicaciones" component={Ubicaciones} /> 
-          <Stack.Screen name="ItemScreen" component={ItemScreen} /> 
+          {!isLoggedIn ? (
+            <Stack.Screen 
+              name="Login" 
+              component={LoginScreen} 
+              options={{ headerShown: false }}
+            />
+          ) : (
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Comerciales" component={Comerciales} />
+              <Stack.Screen name="Municipales" component={Municipales} />
+              <Stack.Screen name="Ubicaciones" component={Ubicaciones} /> 
+              <Stack.Screen name="ItemScreen" component={ItemScreen} /> 
+            </>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

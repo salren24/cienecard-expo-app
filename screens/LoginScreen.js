@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -9,45 +9,38 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://tu_ip_del_servidor:3000/login', {
-        username, // Este es el cNroDocu
-        password  // Este es el nCodContr
-      });
-      
-      if (response.data.token) {
-        await AsyncStorage.setItem('userToken', response.data.token);
-        await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
-        
+      const response = await axios.post('http://192.168.100.128:3005/api/login', { username, password });
+      if (response.data.message === 'Login successful') {
+        const user = response.data.user;
+        await AsyncStorage.setItem('userInfo', JSON.stringify({
+          ncodcontr: user.cnrodocu,
+          cnomcontr: user.cNomContr,
+          activo: user.Activo.toString()
+        }));
         navigation.replace('Home');
-      } else {
-        Alert.alert('Error', 'Inicio de sesión fallido');
       }
     } catch (error) {
-      console.error('Error de inicio de sesión:', error);
-      Alert.alert('Error', 'No se pudo iniciar sesión');
+      Alert.alert('Error', 'Invalid credentials');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
       <TextInput
         style={styles.input}
-        placeholder="Número de Documento"
+        placeholder="Username"
         value={username}
         onChangeText={setUsername}
-        keyboardType="numeric"
       />
       <TextInput
         style={styles.input}
-        placeholder="Código de Contrato"
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
-        keyboardType="numeric"
         secureTextEntry
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Iniciar Sesión</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
   );
@@ -60,26 +53,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
   input: {
     width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    padding: 15,
     marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
     borderRadius: 5,
   },
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+  },
   buttonText: {
-    color: 'white',
-    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

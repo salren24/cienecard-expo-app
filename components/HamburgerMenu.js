@@ -1,9 +1,8 @@
 import React from 'react';
-
 import { View, Text, TouchableOpacity, StyleSheet, Animated, Dimensions, StatusBar, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width, height } = Dimensions.get('window');
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
@@ -20,17 +19,34 @@ const HamburgerMenu = ({ visible, onClose }) => {
     }).start();
   }, [visible, slideAnim]);
 
-
   const menuItems = [
     { title: 'Contacto', screen: 'Contact' },
     { title: 'Opiniones', screen: 'Reviews' },
     { title: 'Ayuda', screen: 'Help' },
     { title: 'Emergencias', screen: 'Emergency' },
+    { title: 'Cerrar Sesión', screen: 'Logout' },
   ];
 
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('userToken');
+      await AsyncStorage.removeItem('userInfo');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'LoginScreen' }],
+      });
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
+  
   const handleMenuItemPress = (screen) => {
     onClose();
-    navigation.navigate(screen);
+    if (screen === 'Logout') {
+      handleLogout();
+    } else {
+      navigation.navigate(screen);
+    }
   };
 
   if (!visible) return null;

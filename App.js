@@ -6,6 +6,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppState } from 'react-native';
+// import 'react-native-get-random-values';
+// import { polyfillWebCrypto } from 'react-native-crypto';
 
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
@@ -15,12 +18,23 @@ import Ubicaciones from './screens/Ubicaciones';
 import ItemScreen from "./screens/ItemScreen";
 
 const Stack = createNativeStackNavigator();
+// polyfillWebCrypto();
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let inactivityTimer;
+
+  const resetInactivityTimer = () => {
+    if (inactivityTimer) clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(logout, 5 * 60 * 1000); // 5 minutes
+  };
+
+  const logout = async () => {
+    await AsyncStorage.removeItem('userToken');
+    setIsLoggedIn(false);
+  };
 
   useEffect(() => {
-    // Verificar si el usuario está autenticado
     const checkLoginStatus = async () => {
       const userToken = await AsyncStorage.getItem('userToken');
       setIsLoggedIn(!!userToken);
@@ -28,21 +42,28 @@ export default function App() {
 
     checkLoginStatus();
 
-    // Activar keepAwake
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        resetInactivityTimer();
+      } else if (nextAppState === 'background') {
+        if (inactivityTimer) clearTimeout(inactivityTimer);
+      }
+    });
+
     async function activateKeepAwake() {
       await activateKeepAwakeAsync();
       console.log('KeepAwake activado');
     }
     activateKeepAwake();
   
-    // Configurar un temporizador para desactivar keepAwake después de 5 segundos
     const timer = setTimeout(async () => {
       deactivateKeepAwake();
       console.log('KeepAwake desactivado');
     }, 5000);
   
-    // Limpiar el temporizador y desactivar keepAwake cuando el componente se desmonte
     return () => {
+      subscription.remove();
+      if (inactivityTimer) clearTimeout(inactivityTimer);
       clearTimeout(timer);
       deactivateKeepAwake();
     };
@@ -53,21 +74,16 @@ export default function App() {
       <NavigationContainer>
         <StatusBar style="light" />
         <Stack.Navigator>
-          {!isLoggedIn ? (
-            <Stack.Screen 
-              name="Login" 
-              component={LoginScreen} 
-              options={{ headerShown: false }}
-            />
-          ) : (
-            <>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Comerciales" component={Comerciales} />
-              <Stack.Screen name="Municipales" component={Municipales} />
-              <Stack.Screen name="Ubicaciones" component={Ubicaciones} /> 
-              <Stack.Screen name="ItemScreen" component={ItemScreen} /> 
-            </>
-          )}
+          <Stack.Screen 
+            name="LoginScreen" 
+            component={LoginScreen} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Comerciales" component={Comerciales} />
+          <Stack.Screen name="Municipales" component={Municipales} />
+          <Stack.Screen name="Ubicaciones" component={Ubicaciones} /> 
+          <Stack.Screen name="ItemScreen" component={ItemScreen} /> 
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

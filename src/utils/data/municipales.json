@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "categoria": "TUSNE",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-cancha.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Campos Deportivos",
+    "oferta": [
+      "Gratis por 1 hora al mes en grass natural, sintético o losas administradas por la municipalidad"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-tusne2.png"
+  },
+  {
+    "id": 2,
+    "categoria": "TUSNE",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-piscina.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Parque de la Familia",
+    "oferta": [
+      "Ingreso gratuito para el titular y el 50% de descuento para sus acompañantes"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-tusne2.png"
+  },
+  {
+    "id": 3,
+    "categoria": "TUSNE",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-banio.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Servicios Higienicos",
+    "oferta": [
+      "Ingreso gratuito a los servicios higienicos administrados por la Municipalidad, para el titular y sus acompañantes"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-tusne2.png"
+  },
+  {
+    "id": 4,
+    "categoria": "Salud",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-ambulancia.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Ambulancia Municipal",
+    "oferta": [
+      "Podrás solicitar el uso de los servicios de ambulancia para medida de presión, toma de temperatura o inyectables. Cel. 980 471 263"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-salud.png"
+  },
+  {
+    "id": 5,
+    "categoria": "Servicios",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-atencion.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Servicios Exclucivos",
+    "oferta": [
+      "Atención preferente en todas las oficinas de la Municipalidad, el cual NO va sobre la Ley N° 27408"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-servicios2.png"
+  },
+  {
+    "id": 6,
+    "categoria": "Beneficios",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-plaza.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Invitaciones",
+    "oferta": [
+      "Invitación a las diversas actividades que realice la municipalidad, campañas y/o promociones de interés"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-beneficio2.png"
+  },
+  {
+    "id": 7,
+    "categoria": "Beneficios",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-reserva.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Reservaciones",
+    "oferta": [
+      "Acceso a zonas reservadas de los eventos organizados por la Municipalidad"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-beneficio2.png"
+  },
+  {
+    "id": 8,
+    "categoria": "TUSNE",
+    "img": "https://apps.municieneguilla.gob.pe/cienecard/img/portada/gm-exclusivo.jpg",
+    "logo": "https://apps.municieneguilla.gob.pe/cienecard/img/muni-cieneguilla.png",
+    "nombre": "Servicios TUSNE",
+    "oferta": [
+      "Porcentaje de descuentos en los demás servicios establecidos en el TUSNE"
+    ],
+    "descuento": "¡Promo!",
+    "promo": "¡Promo!",
+    "color": "#fc800c",
+    "icono-cat": "https://apps.municieneguilla.gob.pe/cienecard/img/menu/m-tusne2.png"
+  }
+]

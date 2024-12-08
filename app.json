@@ -4,13 +4,8 @@
     "slug": "cienecard",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/utils/assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.municieneguilla.cienecard",
@@ -28,16 +23,17 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "permissions": [
-          "ACCESS_COARSE_LOCATION",
-          "ACCESS_FINE_LOCATION"
-        ]
-      }
+        "foregroundImage": "./src/utils/assets/icon.png",
+        "backgroundColor": "#124076"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
+      "package": "com.municieneguilla.cienecard"
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./src/utils/assets/favicon.png",
       "bundler": "metro"
     },
     "extra": {

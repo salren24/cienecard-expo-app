@@ -7,20 +7,42 @@ import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppState } from 'react-native';
-// import 'react-native-get-random-values';
-// import { polyfillWebCrypto } from 'react-native-crypto';
+import * as Location from 'expo-location';
 
-import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
-import Comerciales from "./screens/Comerciales";
-import Municipales from "./screens/Municipales";
-import Ubicaciones from './screens/Ubicaciones';
-import ItemScreen from "./screens/ItemScreen";
+import { LocationProvider } from './src/components/LocationContext';
+import LoginScreen from "./src/screens/LoginScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import Comerciales from "./src/screens/Comerciales";
+import Municipales from "./src/screens/Municipales";
+import Ubicaciones from './src/screens/Ubicaciones';
+import ItemScreen from "./src/screens/ItemScreen";
+import SplashScreen from 'components/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 // polyfillWebCrypto();
 
 export default function App() {
+
+  const [userLocation, setUserLocation] = useState(null);
+  
+
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    })();
+  }, []);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   let inactivityTimer;
 
@@ -70,22 +92,34 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <StatusBar style="light" />
-        <Stack.Navigator>
-          <Stack.Screen 
-            name="LoginScreen" 
-            component={LoginScreen} 
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Comerciales" component={Comerciales} />
-          <Stack.Screen name="Municipales" component={Municipales} />
-          <Stack.Screen name="Ubicaciones" component={Ubicaciones} /> 
-          <Stack.Screen name="ItemScreen" component={ItemScreen} /> 
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <LocationProvider>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <StatusBar style="light" />
+          <Stack.Navigator initialRouteName="Splash">
+            <Stack.Screen 
+              name="Splash"
+              component={SplashScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen 
+              name="LoginScreen" 
+              component={LoginScreen} 
+              options={{ headerShown: false }}
+              initialParams={{ userLocation: userLocation }}
+            />
+            <Stack.Screen name="Home" component={HomeScreen} initialParams={{ userLocation: userLocation }} />
+            <Stack.Screen 
+              name="Comerciales" 
+              component={Comerciales}
+              initialParams={{ userLocation: userLocation }}
+            />
+            <Stack.Screen name="Municipales" component={Municipales} initialParams={{ userLocation: userLocation }} />
+            <Stack.Screen name="Ubicaciones" component={Ubicaciones} initialParams={{ userLocation: userLocation }} /> 
+            <Stack.Screen name="ItemScreen" component={ItemScreen} initialParams={{ userLocation: userLocation }} /> 
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </LocationProvider>
   );
 }
